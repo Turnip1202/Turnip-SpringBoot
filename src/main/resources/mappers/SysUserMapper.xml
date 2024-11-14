@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.turnip.aiadmin.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.turnip.aiadmin.model.entity.SysUserEntity">
+        <!-- 主键映射 -->
+        <id column="id" property="id" jdbcType="INTEGER"/>
+
+        <!-- 普通字段映射 -->
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="password_salt" property="passwordSalt" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="BOOLEAN"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="bio" property="bio" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="BOOLEAN"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <result column="register_ip" property="registerIp" jdbcType="VARCHAR"/>
+        <result column="login_attempts" property="loginAttempts" jdbcType="INTEGER"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,real_name,password,password_salt,phone,email,gender,avatar,birthday,bio,status,role_id,department_id,register_ip,login_attempts,version,created_at,updated_at,deleted_at
+    </sql>
+
+    <select id="findByUsername" resultType="com.turnip.aiadmin.model.entity.SysUserEntity">
+        select
+        <include refid="Base_Column_List"/>
+            from sys_user where username = #{username}
+    </select>
+</mapper>
