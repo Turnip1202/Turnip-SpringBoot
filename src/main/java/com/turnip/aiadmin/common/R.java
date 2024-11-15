@@ -1,8 +1,8 @@
 package com.turnip.aiadmin.common;
 
 
-import com.turnip.aiadmin.constant.consist.ErrorCode;
-import com.turnip.aiadmin.constant.consist.GlobalErrorCodeConstants;
+import com.turnip.aiadmin.constant.consist.StateCode;
+import com.turnip.aiadmin.constant.consist.StateCodeConstants;
 import io.jsonwebtoken.lang.Assert;
 import lombok.Data;
 
@@ -15,7 +15,7 @@ public class R<T> implements Serializable {
     /**
      * 错误码
      *
-     * @see ErrorCode#getCode()
+     * @see StateCode#getCode()
      */
     private Integer code;
     /**
@@ -25,7 +25,7 @@ public class R<T> implements Serializable {
     /**
      * 错误提示，用户可阅读
      *
-     * @see ErrorCode#getMsg() ()
+     * @see StateCode#getMsg() ()
      */
     private String msg;
     /**
@@ -44,22 +44,46 @@ public class R<T> implements Serializable {
         return error(result.getCode(), result.getMsg());
     }
     public static <T> R<T> error(Integer code, String msg){
-        Assert.isTrue(!GlobalErrorCodeConstants.SUCCESS.getCode().equals(code));
+        Assert.isTrue(!StateCodeConstants.SUCCESS.getCode().equals(code));
         R<T> r = new R<>();
         r.code = code;
         r.msg = msg;
         return r;
     }
-    public static <T> R<T> error(ErrorCode errorCode){
-        return error(errorCode.getCode(), errorCode.getMsg());
+    public static <T> R<T> error(StateCode stateCode){
+        return error(stateCode.getCode(), stateCode.getMsg());
     }
-    public static <T> R<T> success(T data){
+    /**
+     * 成功返回，使用默认成功状态码
+     */
+    public static <T> R<T> success(T data) {
+        return success(StateCodeConstants.SUCCESS, data);
+    }
+
+    /**
+     * 成功返回，可以指定成功状态码
+     */
+    public static <T> R<T> success(StateCode stateCode, T data) {
         R<T> r = new R<>();
-        r.code = GlobalErrorCodeConstants.SUCCESS.getCode();
+        r.code = stateCode.getCode();
         r.data = data;
-        r.msg = GlobalErrorCodeConstants.SUCCESS.getMsg();
+        r.msg = stateCode.getMsg();
         r.success = Boolean.TRUE;
         return r;
+    }
+
+    /**
+     * 成功返回，无数据
+     */
+    public static <T> R<T> success() {
+        return success(StateCodeConstants.SUCCESS, null);
+    }
+
+    /**
+     * 成功返回，仅状态码
+     */
+    public static <T> R<T> success(StateCode stateCode) {
+        return success(stateCode, null);
     }
 
 }

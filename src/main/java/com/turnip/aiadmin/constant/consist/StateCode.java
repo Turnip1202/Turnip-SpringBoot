@@ -3,7 +3,7 @@ package com.turnip.aiadmin.constant.consist;
 import lombok.Data;
 
 @Data
-public class ErrorCode {
+public class StateCode {
     /**
      * 错误码
      */
@@ -13,7 +13,7 @@ public class ErrorCode {
      */
     private final String msg;
 
-    public ErrorCode(Integer code, String message) {
+    public StateCode(Integer code, String message) {
         this.code = code;
         this.msg = message;
     }
